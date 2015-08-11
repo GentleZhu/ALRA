@@ -1,6 +1,7 @@
 clear;
-%load 'smile.mat'
-load 'teeth.mat'
+load 'smile.mat'
+%load 'teeth.mat'
+load 'regularmaskgistrgb.mat'
 %load 'gistrgb.mat'
 %load 'blurgistrgb.mat'
 %load './localsift/siftfeature.mat'
@@ -10,9 +11,9 @@ load 'teeth.mat'
 %load 'mouthopen.mat'
 %load ('./O_S.mat');
 %gistrgb=double(hh);
-feat=[gistrgb(1:1000,:);maskgistrgb(1:1000,:)];
-n_sample=[20 40 60 80 100 120 140 160 180 200];
-%Accuracy=zeros(10,10);
+feat=[gistrgb(1:1000,:);regularmaskgistrgb(1:1000,:)];
+n_sample=[50 100 150 200 250 300 350 400 450 500];
+Accuracy=zeros(10);
 Co=[0.1 0.2 0.5 1 2 4 8];% 64 128 256 512 1000];
 Cs=[0.1 0.2 0.5 1 2 4 8];% 64 128 256 512 1000];
 acc=zeros(length(Co),length(Cs),5);
@@ -24,8 +25,8 @@ A=zeros(length(Co),length(Cs));
 %feat=double(blurgistrgb);
 %  img_train=img_train(train_order~=3,:);
 %  train_order=train_order(train_order~=3);
-% for k=1:10
-%     for nrepeat=1:10
+for nsample=1:10
+     for nrepeat=1:10
 %        fprintf('k = %d, nrepeat=%d\n',k,nrepeat);
         clear index;
         clear O;
@@ -36,10 +37,10 @@ A=zeros(length(Co),length(Cs));
         clear sds;
         clear t_all;
         clear t_all2;
-        %index=randperm(length(train_order));
-        %index=index(1:n_sample(k));
+        index=randperm(length(train_order));
+        index=index(1:n_sample(nsample));
         %size(index)
-        [O,S]=constructTraining(img_train,feat,train_order);
+        [O,S]=constructTraining(img_train(index,:),feat,train_order(index));
         %fprintf('Size O and size S,%d,%d',size(O,1),size(S,1));
         O=full(O);
         S=full(S);
@@ -139,11 +140,12 @@ A=zeros(length(Co),length(Cs));
         % predict=predict+1;
         % 
         % fprintf('Accuracy is %f\n',length(find(predict==idx))/length(idx));
-        %Accuracy(j,nrepeat)=AC;
+        Accuracy(nrepeat)=AC;
 
-%        end
+        end
 %fprintf('Best C is %f Accuracy is %f\n',s(b),AC);
-fprintf('Best Co is %f Cs is % fAccuracy is %f\n',Co(Br(Bl)),Cs(Bl),AC);
-% end
+fprintf('Sample number is %d Avearge accuracy is %f\n',n_sample(nsample),mean(Accuracy));
+%Co(Br(Bl)),Cs(Bl),AC);
+end
 
 

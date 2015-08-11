@@ -10,12 +10,12 @@ O=[];
 S=[];
 N
 for i=1:n_train
-     temp=zeros(1,N);
-     if relation(i)~=3
-         temp(pairs(i,1)+N/2)=1;
-         temp(pairs(i,2)+N/2)=-1;
-         S=[S;temp];
-     end
+%     temp=zeros(1,N);
+%     if relation(i)~=3
+%         temp(pairs(i,1)+N/2)=1;
+%         temp(pairs(i,2)+N/2)=-1;
+%         S=[S;temp];
+%     end
     temp=zeros(1,N);
     if relation(i)==1
         temp(pairs(i,1))=1;
