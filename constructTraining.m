@@ -8,7 +8,7 @@ function [ O,S ] = constructTraining( pairs,feat,relation)
 % X(X(:,1)<X(:,2),:)=[-1,1];
 O=[];
 S=[];
-N
+%N
 for i=1:n_train
 %     temp=zeros(1,N);
 %     if relation(i)~=3

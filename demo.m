@@ -1,6 +1,6 @@
 clear;
-load 'smile.mat'
-%load 'teeth.mat'
+%load 'smile.mat'
+load 'teeth.mat'
 load 'regularmaskgistrgb.mat'
 %load 'gistrgb.mat'
 %load 'blurgistrgb.mat'
@@ -12,7 +12,8 @@ load 'regularmaskgistrgb.mat'
 %load ('./O_S.mat');
 %gistrgb=double(hh);
 feat=[gistrgb(1:1000,:);regularmaskgistrgb(1:1000,:)];
-n_sample=[50 100 150 200 250 300 350 400 450 500];
+%n_sample=[50 100 150 200 250 300 350 400 450 500];
+n_sample=2*[10 20 30 40 50 60 70 80 90 100]
 Accuracy=zeros(10);
 Co=[0.1 0.2 0.5 1 2 4 8];% 64 128 256 512 1000];
 Cs=[0.1 0.2 0.5 1 2 4 8];% 64 128 256 512 1000];
