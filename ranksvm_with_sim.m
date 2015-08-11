@@ -68,7 +68,7 @@ if nargin < 7      % Assign the options to their default values
     opt = [];
 end;
 if ~isfield(opt,'lin_cg'),            opt.lin_cg = 0;                    end;
-if ~isfield(opt,'iter_max_Newton'),   opt.iter_max_Newton = 10;          end;
+if ~isfield(opt,'iter_max_Newton'),   opt.iter_max_Newton = 20;          end;
 if ~isfield(opt,'prec'),              opt.prec = 1e-4;                   end;
 if ~isfield(opt,'cg_prec'),           opt.cg_prec = 1e-3;                end;
 if ~isfield(opt,'cg_it'),             opt.cg_it = 20;                    end;

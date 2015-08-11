@@ -5,19 +5,20 @@ load 'teeth.mat'
 %load 'blurgistrgb.mat'
 %load './localsift/siftfeature.mat'
 %load './localsift/masksiftfeature.mat'
+%load 'maskconvnetfeature.mat'
 %load 'convnetfeature.mat'
 %load 'mouthopen.mat'
 %load ('./O_S.mat');
 %gistrgb=double(hh);
-feat=double([gistrgb(1:1000,:);maskgistrgb(1:1000,:)]);
+feat=[gistrgb(1:1000,:);maskgistrgb(1:1000,:)];
 n_sample=[20 40 60 80 100 120 140 160 180 200];
 %Accuracy=zeros(10,10);
-Co=[0.1 0.2 0.5 1 2 4 8  64 128 256 512 1000];
-Cs=[0.1 0.2 0.5 1 2 4 8  64 128 256 512 1000];
+Co=[0.1 0.2 0.5 1 2 4 8];% 64 128 256 512 1000];
+Cs=[0.1 0.2 0.5 1 2 4 8];% 64 128 256 512 1000];
 acc=zeros(length(Co),length(Cs),5);
 A=zeros(length(Co),length(Cs));
 %feat=[siftfeature(1:1000,:);masksiftfeature(1:1000,:)];
-%feat=[convnetfeature(1:1000,:)];
+%feat=[convnetfeature(1:1000,:);maskconvnetfeature(1:1000,:)];
 %feat=siftfeature(1:1000,:);
 %feat=double(gistrgb(1:1000,:));
 %feat=double(blurgistrgb);
@@ -119,16 +120,16 @@ A=zeros(length(Co),length(Cs));
 
         % get the best c value.
         [Cr,Br]=max(A);
-        [~,Bl]=max(Br);
+        [~,Bl]=max(Cr);
         %pp=mod(b,12);
         %qq=(b-pp)/12+1;
         %S=addConstraints(O,S);
         Om=sparse(O);
         Sm=sparse(S);
 
-        c_s(1:size(Sm,1))=Co(Br(Bl));
+        c_s(1:size(Sm,1))=Cs(Bl);
         C_S=c_s';
-        c_o(1:size(Om,1))=Cs(Bl);
+        c_o(1:size(Om,1))=Co(Br(Bl));
         C_O=c_o';
 
         w=ranksvm_with_sim(feat,Om,Sm,C_O,C_S);
