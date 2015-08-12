@@ -5,7 +5,8 @@ function w = ALTR_train(Xt,R,S,C_R,C_S)
 % C_R and C_S are penalty constants for R and S, respectively
 % 
 m=size(Xt,2);
-pr = size(R,1); ps = size(S,1);
+pr = size(R,1)
+ps = size(S,1)
 % C_R = ones(pr,1)*C_R; C_S = ones(ps,1)*C_S;
 % 
 % [K,~, model.sigma] = KNNGraph(Xt',size(Xt,1)-1,0,1);
@@ -77,7 +78,6 @@ cvx_begin
         alph>=zeros(pr,1);
         bet>=zeros(ps,1);
 cvx_end
-w=w';
 %model.alpha = alph;
 %model.beta = bet;
 
