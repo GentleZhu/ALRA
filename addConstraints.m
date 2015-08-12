@@ -1,12 +1,20 @@
-function [ S_ ] = addConstraints( Or,Sr )
+function [ S ] = addConstraints(Sr,img_train,train_order )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-[n,d]=size(Or);
+[~,d]=size(Sr);
+%d=2000;
+n=sum(train_order~=3);
 Sp=zeros(n,d);
-for i=1:n
-    Sp(i,find(Or(i,:)==1)+d/2)=1;
-    Sp(i,find(Or(i,:)==-1)+d/2)=-1;
+idx=find(train_order~=3);
+for i=1:length(idx)
+	Sp(i,img_train(idx(i),1)+d/2)=1;
+    Sp(i,img_train(idx(i),2)+d/2)=-1;
+%	if i>1
+%		[p,~]=sort([img_train(idx(i-1),2),img_train(idx(i),1)]);
+%		Sp(i,p(1)+d/2)=1;
+%		Sp(i,p(2)+d/2)=-1;
+%	end
 end
-S_=[Sr;Sp];
+S=[Sr;Sp];
 end
 

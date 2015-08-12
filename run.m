@@ -1,6 +1,6 @@
 clear;
-load 'smile.mat'
-%load 'teeth.mat'
+%load 'smile.mat'
+load 'teeth.mat'
 %load 'gistrgb.mat'
 %load 'blurgistrgb.mat'
 load 'regularmaskgistrgb.mat'
@@ -14,6 +14,9 @@ load 'regularmaskgistrgb.mat'
 feat=[gistrgb(1:1000,:);regularmaskgistrgb(1:1000,:)];
 s=[0.1];% 0.2 0.5 1 2 4 8 16 32 64 128 256 1000];
 [Om,Sm]=constructTraining(img_train,feat,train_order);
+Sm=addConstraints(Sm,img_train,train_order);
+Sm=sparse(Sm);
+Om=sparse(Om);
 for i=1:length(s)
     c_s(1:size(Sm,1))=s(i);
     C_S=c_s';
