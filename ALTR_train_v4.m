@@ -81,6 +81,7 @@ cvx_begin
         (Xt(alpha_index(:,1),:)-Xt(alpha_index(:,2),:))*w >= ones(pr,1)-alph;
         -bet<=(Xt(beta_index(:,1),:)-Xt(beta_index(:,2),:))*w<=bet;
         W_u*(ones(pw,1)-theta)<=(Xt(theta_index(:,1),:)-Xt(theta_index(:,2),:))*w;
+        %theta<=(Xt(theta_index(:,1),:)-Xt(theta_index(:,2),:))*w;
         alph>=zeros(pr,1);
         bet>=zeros(ps,1);
         theta>=zeros(pw,1);
