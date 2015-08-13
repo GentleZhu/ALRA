@@ -24,17 +24,17 @@ s=[1];% 0.2 0.5 1 2 4 8 16 32 64 128 256 1000];
 %Om=[Om;Rp];
 % Sm=sparse(Sm);
 % Om=sparse(Om);
-nrepeat=10;
+nrepeat=1;
 acc=zeros(length(n_train),nrepeat,4);
 for i=1:length(n_train)
     for j=1:nrepeat
     index=randperm(length(img_train));
     index=index(1:n_train(i));
-    img_train=img_train(index,:);
-    train_order=train_order(index);
-    [Om,Sm]=constructTraining(img_train,feat,train_order);
-    [Rp]=addConstraints(Sm,img_train,train_order,2);
-    [Sp]=addConstraints(Sm,img_train,train_order,1);
+    img_t=img_train(index,:);
+    t_order=train_order(index);
+    [Om,Sm]=constructTraining(img_t,feat,t_order);
+    [Rp]=addConstraints(Sm,img_t,t_order,2);
+    [Sp]=addConstraints(Sm,img_t,t_order,1);
 %for i=1:length(s)
 %      c_s(1:size(Sm,1))=s(i);
 %      C_S=c_s';
@@ -45,7 +45,7 @@ for i=1:length(n_train)
     wa=ALTR_train_v4(feat,Om,[Sm;Sp],Rp,s(1),s(1),1,0.5);
     wb=ALTR_train_v4(feat,Om,Sm,Rp,s(1),s(1),1,0.5);
     wc=ALTR_train_v2(feat,Om,[Sm;Rp],s(1),s(1));
-    wd=ALTR_train_v2(feat,Om,Sm,Sp,s(1),s(1));
+    wd=ALTR_train_v2(feat,Om,Sm,s(1),s(1));
     %wb=ALTR_train_v3(feat,Om,Sm,s(i),s(i));
 	predictions=gistrgb*wa;
     acc(i,j,1)= test(predictions,img_test,test_order);
@@ -56,7 +56,7 @@ for i=1:length(n_train)
     predictions=gistrgb*wd;
     acc(i,j,4)= test(predictions,img_test,test_order);
     
- 	fprintf('i=%d,j=%d best AC =%f\n',i,j,max(i,j,:));
+ 	fprintf('i=%d,j=%d best AC =%f\n',i,j,acc(i,j,:));
 %     predictions=gistrgb*wb;
 %     [AC]= test(predictions,img_test,test_order);
 %     fprintf('C=%f,cvx_2 Ac=%f\n',s(i),AC);
