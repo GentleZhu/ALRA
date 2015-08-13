@@ -1,6 +1,6 @@
 clear;
-%load 'smile.mat'
-load 'teeth.mat'
+load 'smile.mat'
+%load 'teeth.mat'
 load 'regularmaskgistrgb.mat'
 %load 'gistrgb.mat'
 %load 'blurgistrgb.mat'
