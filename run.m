@@ -6,6 +6,14 @@ load 'teeth.mat'
 load 'regularmaskgistrgb.mat'
 %load './localsift/siftfeature.mat'
 %load './localsift/masksiftfeature.mat'
+<<<<<<< HEAD
+load 'convnetfeature.mat'
+load 'graymaskconvnetfeature.mat'
+%load 'mouthopen.mat'
+feat=[convnetfeature(1:1000,:);graymaskconvnetfeature(1:1000,:)];
+%feat=[convnetfeature(1:1000,:)];
+%feat=[gistrgb(1:1000,:);regularmaskgistrgb(1:1000,:)];
+s=[0.1 0.2 0.5 1];% 2 4 8 16 32 64 128 256 1000];
 %load 'convnetfeature.mat'
 %load 'graymaskconvnetfeature.mat'
 load 'caffeconvnet.mat'
