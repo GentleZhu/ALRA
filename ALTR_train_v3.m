@@ -1,4 +1,4 @@
-function w = ALTR_train(Xt,R,S,W,C_R,C_S,C_W)
+function w = ALTR_train(Xt,R,S,C_R,C_S)
 % X ~ n x m (n is the # of samples, m is the # of features)
 % R ~ pr x n contains exactly one 1 and one -1
 % S ~ ps x n contains exactly one 1 and one -1
@@ -7,7 +7,7 @@ function w = ALTR_train(Xt,R,S,W,C_R,C_S,C_W)
 m=size(Xt,2);
 pr = size(R,1);
 ps = size(S,1);
-pw = size(W,1);
+%pw = size(W,1);
 % C_R = ones(pr,1)*C_R; C_S = ones(ps,1)*C_S;
 % 
 % [K,~, model.sigma] = KNNGraph(Xt',size(Xt,1)-1,0,1);
@@ -24,10 +24,10 @@ beta_index = [];
 for i=1:ps;
     beta_index = [beta_index; find(S(i,:)==1) find(S(i,:)==-1) ];
 end
-theta_index = [];
-for i=1:pw;
-    theta_index = [theta_index; find(W(i,:)==1) find(W(i,:)==-1) ];
-end
+% theta_index = [];
+% for i=1:pw;
+%     theta_index = [theta_index; find(W(i,:)==1) find(W(i,:)==-1) ];
+% end
 % model.alpha_index = alpha_index; model.beta_index = beta_index;
 % % K_R = [];
 % % for i=1:pr-1; 
@@ -75,15 +75,13 @@ end
 %         zeros(ps,1) <= bet <= C_S
 % cvx_end
 cvx_begin
-    variables w(m,1) alph(pr,1) bet(ps,1) theta(pw,1);
-    minimize (0.5*sum_square_abs(w)+C_R*sum(alph)+C_S*sum(bet)+C_W*sum(theta));
+    variables w(m,1) alph(pr,1) bet(ps,1);
+    minimize (0.5*sum_square_abs(w)+C_R*sum(alph)+C_S*sum(bet));
     subject to 
         (Xt(alpha_index(:,1),:)-Xt(alpha_index(:,2),:))*w >= ones(pr,1)-alph;
-        -bet<=(Xt(beta_index(:,1),:)-Xt(beta_index(:,2),:))*w<=bet;
-        -theta<=(Xt(theta_index(:,1),:)-Xt(theta_index(:,2),:))*w;
+        -bet<=(Xt(beta_index(:,1),:)-Xt(beta_index(:,2),:))*w;
         alph>=zeros(pr,1);
         bet>=zeros(ps,1);
-        theta>=zeros(pw,1);
 cvx_end
 %model.alpha = alph;
 %model.beta = bet;
