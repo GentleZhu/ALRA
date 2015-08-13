@@ -43,7 +43,7 @@ A=zeros(length(Co),length(Cs));
         %size(index)
 		[O,S]=constructTraining(img_train,feat,train_order);
 		S=addConstraints(S,img_train,train_order);
-		size(S)
+		%size(S)
 	%fprintf('Size O and size S,%d,%d',size(O,1),size(S,1));
         %O=full(O);
         %S=full(S);
@@ -102,8 +102,9 @@ A=zeros(length(Co),length(Cs));
         t_o(1:size(to,1))=Co(k); T_O=tr_o';
         
         
-        w=ranksvm_with_sim(feat,sparse(OR),sparse(SM),TR_O,TR_S);
-        %[~,w]=demo_train(feat,O,S,1);
+        %w=ranksvm_with_sim(feat,sparse(OR),sparse(SM),TR_O,TR_S);
+        w=ALTR_train_v3(feat,Om,Sm,TR_O,TR_S);
+		%[~,w]=demo_train(feat,O,S,1);
         %predictions=gistrgb*w;
         %[r]= test(predictions,img_test,test_order);
         [r]= test2rel(w,to,feat);
@@ -136,8 +137,9 @@ A=zeros(length(Co),length(Cs));
         c_o(1:size(Om,1))=Co(Br(Bl));
         C_O=c_o';
 
-        w=ranksvm_with_sim(feat,Om,Sm,C_O,C_S);
-        predictions=gistrgb*w;
+        %w=ranksvm_with_sim(feat,Om,Sm,C_O,C_S);
+        w=ALTR_train_v3(feat,Om,Sm,C_O,C_S);
+		predictions=gistrgb*w;
         [AC]= test(predictions,img_test,test_order);
         % predict=predictions(img_test(:,1),:)<predictions(img_test(:,2),:);
         % predict=predict+1;
