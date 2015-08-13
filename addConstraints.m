@@ -9,7 +9,7 @@ end
     if type==1
         Rp=zeros(n,d);
     else
-        Rp=zeros(50,d);
+        Rp=zeros(n,d);
     end
     idx=find(train_order~=3);
 %d=2000;
@@ -30,7 +30,7 @@ if type==1
     %	end
     end
 else
-    for i=1:50
+    for i=1:length(idx)
          if train_order(idx(i))==1
         Rp(i,img_train(idx(i),1))=1;
         Rp(i,img_train(idx(i),2)+d/2)=-1;
