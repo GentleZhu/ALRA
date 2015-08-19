@@ -14,9 +14,9 @@ clear;
 %load 'caffegrayconvnet.mat'
 load 'poolconvnet.mat'
 %load 'poolmaskconvnet.mat'
-load 'exteethconvnet.mat'
+%load 'exteethconvnet.mat'
 %load 'exsmileconvnet.mat'
-%load 'exmouthconvnet.mat'
+load 'exmouthconvnet.mat'
 
 %load 'exteethgistrgb.mat'
 %load 'exsmilegistrgb.mat'
