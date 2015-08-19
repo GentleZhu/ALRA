@@ -1,7 +1,7 @@
 clear;
-load 'smile.mat'
+%load 'smile.mat'
 %load 'teeth.mat'
-load 'regularmaskgistrgb.mat'
+%load 'regularmaskgistrgb.mat'
 %load 'gistrgb.mat'
 %load 'blurgistrgb.mat'
 %load './localsift/siftfeature.mat'
@@ -11,7 +11,12 @@ load 'regularmaskgistrgb.mat'
 %load 'mouthopen.mat'
 %load ('./O_S.mat');
 %gistrgb=double(hh);
-feat=[gistrgb(1:1000,:);regularmaskgistrgb(1:1000,:)];
+load 'poolconvnet.mat'
+load 'exmouthconvnet.mat'
+%feat=[gistrgb(1:1000,:);regularmaskgistrgb(1:1000,:)];
+convnetfeature=normr(convnetfeature);
+exconvnetfeature=normr(exconvnetfeature);
+feat=[convnetfeature(1:1000,:);exconvnetfeature];
 %n_sample=[50 100 150 200 250 300 350 400 450 500];
 %n_sample=2*[10 20 30 40 50 60 70 80 90 100]
 Accuracy=zeros(10);
@@ -26,8 +31,8 @@ A=zeros(length(Co),length(Cs));
 %feat=double(blurgistrgb);
 %  img_train=img_train(train_order~=3,:);
 %  train_order=train_order(train_order~=3);
-%for nsample=1:10
-%     for nrepeat=1:10
+for nsample=1:10
+     for nrepeat=1:10
 %        fprintf('k = %d, nrepeat=%d\n',k,nrepeat);
         clear index;
         clear O;
@@ -38,11 +43,11 @@ A=zeros(length(Co),length(Cs));
         clear sds;
         clear t_all;
         clear t_all2;
-        %index=randperm(length(train_order));
-        %index=index(1:n_sample(nsample));
+        index=randperm(length(train_order));
+        index=index(1:n_sample(nsample));
         %size(index)
-		[O,S]=constructTraining(img_train,feat,train_order);
-		S=addConstraints(S,img_train,train_order);
+		[O,S]=constructTraining(img_train(1:index),feat,train_order(1:index));
+		S=addConstraints(S,img_train(1:index),train_order(1:index));
 		%size(S)
 	%fprintf('Size O and size S,%d,%d',size(O,1),size(S,1));
         %O=full(O);
@@ -147,10 +152,10 @@ A=zeros(length(Co),length(Cs));
         % fprintf('Accuracy is %f\n',length(find(predict==idx))/length(idx));
         %Accuracy(nrepeat)=AC;
 
-%        end
+        end
 %fprintf('Best C is %f Accuracy is %f\n',s(b),AC);
 fprintf('Cs is %f Co is %f Avearge accuracy is %f\n',Cs(Bl),Co(Br(Bl)),AC);
 %Co(Br(Bl)),Cs(Bl),AC);
-%end
+end
 
 
