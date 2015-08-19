@@ -46,8 +46,8 @@ for nsample=1:10
         index=randperm(length(train_order));
         index=index(1:n_sample(nsample));
         %size(index)
-		[O,S]=constructTraining(img_train(1:index),feat,train_order(1:index));
-		S=addConstraints(S,img_train(1:index),train_order(1:index));
+		[O,S]=constructTraining(img_train(1:index,:),feat,train_order(1:index));
+		S=addConstraints(S,img_train(1:index,:),train_order(1:index));
 		%size(S)
 	%fprintf('Size O and size S,%d,%d',size(O,1),size(S,1));
         %O=full(O);

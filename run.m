@@ -43,16 +43,21 @@ s=[1];% 0.2 0.5 1 2 4 8 16 32 64 128 256 1000];
 %Om=[Om;Rp];
 % Sm=sparse(Sm);
 % Om=sparse(Om);
-% nrepeat=1;
+nrepeat=1;
 acc=zeros(length(n_train),nrepeat,2);
 for i=1:length(n_train)
     for j=1:nrepeat
+    clear img_t;
+    clear t_order;
+    clear Om;
+    clear Sm;
+    clear Rp;
     index=randperm(length(img_train));
     index=index(1:n_train(i));
-    img_t=img_train(index);
+    img_t=img_train(index,:);
     t_order=train_order(index);
     [Om,Sm]=constructTraining(img_t,feat,t_order);
-    [Rp]=addConstraints(Sm,img_t,t_order,2);
+    [Rp]=addConstraints(Sm,img_t,t_order,2,img_train,train_order);
     %[Sp]=addConstraints(Sm,img_t,t_order,1);
 %for i=1:length(s)
 %Om=[Sm;Sp];
@@ -76,7 +81,7 @@ for i=1:length(n_train)
     predictions=convnetfeature*wd;
     acc(i,j,2)= test(predictions,img_test,test_order);
     
-    fprintf('Best AC =%f %f\n',acc(2),acc(4));
+    fprintf('Best AC =%f %f\n',acc(i,j,1),acc(i,j,2));
 	%fprintf('Best AC =%f %f %f %f\n',acc(1),acc(2),acc(3),acc(4));
 %     predictions=gistrgb*wb;
 %     [AC]= test(predictions,img_test,test_order);
@@ -84,6 +89,7 @@ for i=1:length(n_train)
 %     predictions=gistrgb*wc;
 %     [AC]= test(predictions,img_test,test_order);
 %     fprintf('C=%f,cvx_2 Ac=%f\n',s(1),AC);
-     end
+    end
+     break;
 end
 save('acc.mat','acc');
