@@ -1,8 +1,9 @@
 %clear;
-load 'smile.mat'
-%load 'teeth.mat'
-%load 'mouthopen.mat'
-%load 'eyesopen.mat'
+load '~/Desktop/DavisSummer/training_data/smile.mat'
+%load '~/Desktop/DavisSummer/training_data/teeth.mat'
+%load '~/Desktop/DavisSummer/training_data/mouthopen.mat'
+%load '~/Desktop/DavisSummer/training_data/eyesopen.mat'
+
 %feat=[convnetfeature(1:1000,:);graymaskconvnetfeature(1:1000,:)];
 feat=[convnetfeature(1:1000,:);exconvnetfeature];
 %feat=[gistrgb(1:1000,:);exgistrgb];
