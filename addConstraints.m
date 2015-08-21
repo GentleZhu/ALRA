@@ -8,7 +8,7 @@ end
 [~,d]=size(Rr);
 n=sum(train_order~=3);
 if type==1
-    Rp=zeros(n,d);
+    Rp=zeros(2*n,d);
 else
     Rp=zeros(2*n,d);
 end
@@ -34,14 +34,14 @@ if type==1
         t=i;
         if train_order(idx(i))==1
             Rp(2*i-1,img_train(idx(i),1))=1;
-            Rp(2*i-1,1000+i)=-1;
-            %Rp(2*i,img_train(idx(i),2))=-1;
-            %Rp(2*i,999+2*t)=1;
+            Rp(2*i-1,1000+2*t)=-1;
+            Rp(2*i,img_train(idx(i),2))=-1;
+            Rp(2*i,999+2*t)=1;
         else
-            %Rp(2*i-1,img_train(idx(i),1))=-1;
-            %Rp(2*i-1,1000+2*t)=1;
+            Rp(2*i-1,img_train(idx(i),1))=-1;
+            Rp(2*i-1,1000+2*t)=1;
             Rp(2*i,img_train(idx(i),2))=1;
-            Rp(2*i,1000+i)=-1;
+            Rp(2*i,999+2*t)=-1;
         end
     end
 else

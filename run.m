@@ -1,5 +1,5 @@
 clear;
-%load 'smile.mat'
+load 'smile.mat'
 %load 'teeth.mat'
 %load 'exmouthgistrgb.mat'
 %load 'gistrgb.mat'
@@ -24,7 +24,7 @@ clear;
 
 %load './dsiftfeature/dsiftfeature.mat'
 %load './dsiftfeature/maskdsiftfeature.mat'
-load 'mouthopen.mat'
+%load 'mouthopen.mat'
 %load 'eyesopen.mat'
 %convnetfeature=normr(convnetfeature);
 %exconvnetfeature=normr(exconvnetfeature);
