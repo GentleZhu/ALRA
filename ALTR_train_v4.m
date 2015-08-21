@@ -14,6 +14,7 @@ pw = size(W,1);
 % model.x = Xt;
 % R=full(R);
 % S=full(S);
+R=[R;W];
 alpha_index = [];
 for i=1:pr;
     alpha_index = [alpha_index; find(R(i,:)==1) find(R(i,:)==-1) ]; 
