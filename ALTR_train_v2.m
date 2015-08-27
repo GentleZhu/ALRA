@@ -73,7 +73,7 @@ end
 %         zeros(pr,1) <= alph <= C_R
 %         zeros(ps,1) <= bet <= C_S
 % cvx_end
-cvx_begin
+cvx_begin quiet
     variables w(m,1) alph(pr,1) bet(ps,1);
     minimize (0.5*sum_square_abs(w)+C_R*sum(alph)+C_S*sum(bet));
     subject to 
