@@ -8,7 +8,7 @@ bin=bin-mask_bin;
 % % test=bin(:,1001:2000);
 % [P,~]=size(bin);
 % siftfeature=zeros(size(bin));
-% % epsilon=0.001;
+% % % epsilon=0.001;
 % for i=1:P
 %     siftfeature(i,:)=bin(i,:)-mean(train(i,:));
 %     if std(train(i,:))>0
@@ -21,12 +21,12 @@ bin=bin-mask_bin;
 %for i=1:P
 %    siftfeature(i,:)=bin(i,:)/sum(bin(i,:));
 %end
-
+%siftfeature=siftfeature';
 masksiftfeature=normr(bin');
 
 % MIN=min(bin,[],2);
 % MAX=max(bin,[],2);
 % siftfeature=bsxfun(@minus,bin,MIN);
 % siftfeature=bsxfun(@rdivide,siftfeature,MAX-MIN);
-%masksiftfeature=siftfeature';
+% siftfeature=siftfeature';
 save('maskdsiftfeature.mat','masksiftfeature');
