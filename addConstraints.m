@@ -10,7 +10,7 @@ n=sum(train_order~=3);
 if type==1
     Rp=zeros(2*n,d);
 else
-    Rp=zeros(n,d);
+    Rp=zeros(2*n,d);
 end
 idx= find(train_order~=3);
 %R_train=all_train(all_order~=3,:);
@@ -76,14 +76,14 @@ else
          t=i;
         if train_order(idx(i))==1
             Rp(2*i-1,img_train(idx(i),1))=1;
-            Rp(2*i-1,216+2*t)=-1;
+            Rp(2*i-1,999+2*t)=-1; %this should be chaned as dataset varies
             Rp(2*i,img_train(idx(i),2))=-1;
-            Rp(2*i,217+2*t)=1;
+            Rp(2*i,1000+2*t)=1;
         else
             Rp(2*i-1,img_train(idx(i),1))=-1;
-            Rp(2*i-1,216+2*t)=1;
+            Rp(2*i-1,999+2*t)=1;
             Rp(2*i,img_train(idx(i),2))=1;
-            Rp(2*i,217+2*t)=-1;
+            Rp(2*i,1000+2*t)=-1;
          end
 %         if train_order(idx(i))==1
 %         Rp(i,img_train(idx(i),1))=1;
