@@ -20,6 +20,11 @@ else
     X=gistrgb;
 end
 n_sample=size(img_train,1);
+acc=zeros(nrepeat,train_iter,2);
+for i=1:nrepeat
+clear passive;
+clear model;
+iter=0;
 train_index=randperm(n_sample,init_sample)';
 model.train_index=train_index;
 passive.train_index=train_index;
@@ -30,7 +35,6 @@ model.selected=[];
 passive.Aug=[];
 passive.selected=[];
 passive.train_order=train_order;
-iter=0;
 img_partial=img_train(train_order~=3,:);
 model.init=train_index;
 model.feat=feat;
@@ -38,8 +42,9 @@ passive.init=train_index;
 passive.feat=feat;
 model.img_train=img_train;
 passive.img_train=img_train;
-acc=zeros(nrepeat,train_iter,2);
-for i=1:nrepeat
+
+
+
 while iter<train_iter
     if ~isempty(model.selected)
         ind=augment_select(model.selected,img_train,img_partial);
