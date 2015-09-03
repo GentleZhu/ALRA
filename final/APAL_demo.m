@@ -1,8 +1,8 @@
 function APAL_demo( train_data,init_sample,train_iter,nrepeat,batch,feature )
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
-addpath '~/Desktop/DavisSummer/training_data/faces'
-%addpath '../../training_data'
+%addpath '~/Desktop/DavisSummer/training_data/faces'
+addpath '../../training_data'
 load (train_data);
 if nargin<5
     batch=1;
