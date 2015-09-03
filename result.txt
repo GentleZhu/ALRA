@@ -36,10 +36,8 @@ Sample ratio is 20, best AC =0.703356 0.708054
 2 7
 2 8
 2 9
-{Error using vertcat
-Dimensions of matrices being concatenated are not consistent.
-
-Error in ALTR_train_v4 (line 30)
-    theta_index = [theta_index; find(W(i,:)==1) find(W(i,:)==-1) ];
+1
+{Error using ALTR_train_v4 (line 33)
+dimension mismatch
 } 
 EDU>> EDU>> EDU>> EDU>> EDU>> EDU>> EDU>> EDU>> EDU>> EDU>> EDU>> EDU>> 

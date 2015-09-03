@@ -27,6 +27,11 @@ for i=1:ps;
 end
 theta_index = [];
 for i=1:pw;
+	temp=[find(W(i,:)==1) find(W(i,:)==-1)];
+	if size(temp,2)~=2
+		fprintf('%d\n',size(temp,2));
+		error('dimension mismatch');
+	end
     theta_index = [theta_index; find(W(i,:)==1) find(W(i,:)==-1) ];
 end
 % model.alpha_index = alpha_index; model.beta_index = beta_index;
