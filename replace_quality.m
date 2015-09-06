@@ -1,15 +1,17 @@
 %clear;
+function train_varyu(train_data)
+load (strcat('../training_data/',train_data))
 %load '../training_data/smile.mat'
 %load '../training_data/teeth.mat'
-load '../training_data/mouthopen.mat'
+%load '../training_data/mouthopen.mat'
 %load '../training_data/eyesopen.mat'
 %feat=[convnetfeature(1:1000,:);graymaskconvnetfeature(1:1000,:)];
 feat=[convnetfeature(1:1000,:);exconvnetfeature];
 %feat=[gistrgb(1:1000,:);exgistrgb];
 %feat=[gistrgb(1:1000,:);regularmaskgistrgb(1:1000,:)];
 %feat=[siftfeature(1:1000,:);masksiftfeature(1:1000,:)];
-n_train=[20 40 60 80 100 120 140 160 180 200];% 300 350 400 450 500];
-%aug_ratio=[0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0];
+%n_train=[20 40 60 80 100 120 140 160 180 200];% 300 350 400 450 500];
+aug_ratio=[0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0];
 s=[1];% 0.2 0.5 1 2 4 8 16 32 64 128 256 1000];
 %u=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2]
 %Sp=[];
@@ -44,16 +46,16 @@ acc=zeros(10,2,10);
 %       C_O=c_o';
 %wb=ranksvm_with_sim(feat,Om,Sm,C_O,C_S);
 %    
-n_O=size(Om,1);
 n_R=size(Rp,1);
 fprintf('Here\n');
-for i=1:length(n_train)
+
+for i=1:numel(aug_ratio)
 	for j=1:10
-	Ridx=randperm(n_R,n_train(i));
+	Ridx=randperm(n_R,floor(aug_ratio(i)*n_R));
 	
 	R=Rp(Ridx,:);
      %wa=ALTR_train_v4(feat,Om,[Sm;Sp],Rp,s(1),s(1),1,0.5);
-     wb=ALTR_train_v4(feat,Om,Sm,R,s(1),s(1),1,0.5);
+     wb=ALTR_train_v4(feat,Om,Sm,R,s(1),s(1),1,1);
      %wc=ALTR_train_v2(feat,Om,[Sm;Sp],s(1),s(1));
      wd=ALTR_train_v2(feat,Om,Sm,s(1),s(1));
 %     %wb=ALTR_train_v3(feat,Om,Sm,s(i),s(i));
@@ -69,7 +71,7 @@ for i=1:length(n_train)
     end
 	ac1=mean(acc(i,1,:));
 	ac2=mean(acc(i,2,:));
-    fprintf('Sample ratio is %d, best AC =%f %f\n',n_train(i),ac1,ac2);
+    fprintf('Sample ratio is %f, best AC =%f %f\n',aug_ratio(i),ac1,ac2);
 end
 	%fprintf('Best AC =%f %f %f %f\n',acc(1),acc(2),acc(3),acc(4));
 %     predictions=gistrgb*wb;
@@ -81,4 +83,4 @@ end
     %end
      %break;
 %end
-save('acc.mat','acc');
+save(strcat('./result/',train_data),'acc');
