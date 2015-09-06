@@ -1,9 +1,20 @@
 %clear;
-load 'pointy.mat'
-%load 'highheel.mat'
-prefix='~/Desktop/shoes/';
+%load '~/Desktop/DavisSummer/training_data/shoes/highheel.mat'
+%load 'leg.mat'
+%load 'highheel.mat';
+%load 'open.mat'
+load 'leg.mat'
+load 'test.mat';
+load '~/Desktop/DavisSummer/training_data/shoes/shoes_attributes'
+%prefix='~/Desktop/shoes/';
+
 uni_pic=unique(img_train);
-feat=[convnetfeature;aexconvnetfeature];
+%feat=[fullconvnetfeature;fullexconvnetfeature];
+feat=[convnetfeature;exconvnetfeature];
+%feat=[gistrgb;exgistrgb];
+train_order(img_train(:,1)==img_train(:,2),:)=[];
+img_train(img_train(:,1)==img_train(:,2),:)=[];
+
 for i=1:size(img_train,1)
     img_train(i,1)=find(uni_pic==img_train(i,1));
     img_train(i,2)=find(uni_pic==img_train(i,2));
@@ -53,17 +64,25 @@ s=[1];% 0.2 0.5 1 2 4 8 16 32 64 128 256 1000];
 %    
 %for i=1:length(u)
      %wa=ALTR_train_v4(feat,Om,[Sm;Sp],Rp,s(1),s(1),1,1);
-     wb=ALTR_train_v4(feat,Om,Sm,Rp(7:8,:),s(1),s(1),1,1);
+     wb=ALTR_train_v4(feat,Om,Sm,Rp,s(1),s(1),1,0.3);
      %wc=ALTR_train_v2(feat,Om,[Sm;Sp],s(1),s(1));
      wd=ALTR_train_v2(feat,Om,Sm,s(1),s(1));
+     
+     real_inds=test_inds(img_test);
+    O=orders(7,:);
+    img_order=O(class_labels(real_inds));
+    test_order=3*ones(2000,1);
+    test_order(img_order(:,1)<img_order(:,2))=2;
+    test_order(img_order(:,1)>img_order(:,2))=1;
+
     %wb=ALTR_train_v3(feat,Om,Sm,s(i),s(i));
  	%predictions=testconvnetfeature*wa;
     %acc(1)= test(predictions,img_test,test_order);
-    predictions=testconvnetfeature*wb;
+    predictions=flipconvnetfeature*wb;
     acc(2)= test(predictions,img_test,test_order);
     %predictions=testconvnetfeature*wc;
     %acc(3)= test(predictions,img_test,test_order);
-    predictions=testconvnetfeature*wd;
+    predictions=flipconvnetfeature*wd;
     acc(4)= test(predictions,img_test,test_order);
     
     fprintf('Best AC =%f %f\n',acc(2),acc(4));
